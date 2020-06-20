@@ -14,7 +14,7 @@
 }
 
 .form-container {
-  width: 60%;
+  width: 100%;
 }
 
 .form-content {
@@ -26,6 +26,14 @@
 
 label {
   margin: 5px 0px;
+}
+
+.submit-btn {
+  background-color: blue;
+  color: white;
+  border-radius: 5px;
+  height: 5vh;
+  width: 10vw;
 }
 
 /* input, select {
