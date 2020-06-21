@@ -13,12 +13,16 @@ const router = express.Router()
 router.use(bodyParser.json());
 
 
-router.post('/', async (req, res) => {
-  const value = formData(req.body);
-  const voterDetailsResp = await axios.post('https://teamrv-mvp.sos.texas.gov/MVP/voterDetails.do', value);
-  const respData = voterDetailsResp.data;
-  const elections = await grabUpcomingElections(respData);
-  res.send(elections);
+router.post('/', async (req, res, next) => {
+  try {
+    const value = formData(req.body);
+    const voterDetailsResp = await axios.post('https://teamrv-mvp.sos.texas.gov/MVP/voterDetails.do', value);
+    const respData = voterDetailsResp.data;
+    const elections = await grabUpcomingElections(respData);
+    res.send(elections);
+  } catch (e) {
+    next(e)
+  }
 })
 
 module.exports = router

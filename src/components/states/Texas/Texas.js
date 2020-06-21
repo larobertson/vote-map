@@ -28,6 +28,12 @@ const Texas = () => {
   });
   const [elections, setElections] = useState([]);
   const [vuid, setVuid] = useState('');
+  const [error, setError] = useState(false);
+
+  const renderError = () => {
+    // put an alert tag here
+    // would be nice if we could distinguish where the error was
+  }
 
 
   const generateVoterInfoFields = (option) => {
@@ -107,9 +113,17 @@ const Texas = () => {
   }
 
   const handleSubmitVoterData = async () => {
-    const resp = await Axios.post('http://localhost:3001/fetchVoterData', value);
-    setElections(resp.data.elections);
-    setVuid(resp.data.vuid);
+    try {
+      const resp = await Axios.post('http://localhost:3001/fetchVoterData', value);
+      setElections(resp.data.elections);
+      setVuid(resp.data.vuid);
+      if (error) {
+        setError(false);
+      }
+    } catch (e) {
+      // console.log('what is e?', e);
+      setError(true);
+    }
   }
 
   const findElectionLocations = async (event) => {
@@ -139,7 +153,7 @@ const Texas = () => {
           onClick={handleSubmitVoterData}/>
         </div>
         <div className='elections-container'>
-          {_.map(elections, (obj, index) => {
+          {error ? <p>Something went wrong</p> : _.map(elections, (obj, index) => {
             return (
               <button value={obj.number} onClick={findElectionLocations}>{obj.election}</button>
             )
