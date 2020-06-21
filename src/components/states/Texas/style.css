@@ -1,8 +1,37 @@
 .container {
   display: flex;
+  /* flex-direction: column; */
+  /* width: 40%; */
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 5%;
+}
+
+.voter-info-container {
+  display: flex;
   flex-direction: column;
   width: 40%;
   flex-wrap: wrap;
+  margin: 2%;
+}
+
+.elections-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  flex-wrap: wrap;
+  margin: 2%;
+  background-color: tan;
+}
+
+.location-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  height: 20vh;
+  margin: 2%;
+  background-color: beige;
 }
 
 .form-picker {

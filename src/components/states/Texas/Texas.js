@@ -110,17 +110,26 @@ const Texas = () => {
 
     return (
       <div className='container'>
-        <select onChange={handleVoterOptSelection}>
-          {_.map(voterOptions, (opt) => {
-              return <option>{opt}</option>
-          })}
-        </select>
-        <div className='form-picker'>
-          {generateFields(voterOpt)}
+        <div className='voter-info-container'>
+          <select onChange={handleVoterOptSelection}>
+            {_.map(voterOptions, (opt, key) => {
+                return <option key={key}>{opt}</option>
+            })}
+          </select>
+          <div className='form-picker'>
+            {generateFields(voterOpt)}
+          </div>
+          <input className='submit-btn'
+          type="button"
+          value="Submit"
+          onClick={handleSubmit}/>
         </div>
-        <input class='submit-btn'
-        type="button"
-        value="Submit"/>
+        <div className='elections-container'>
+
+        </div>
+        <div className='location-container'>
+
+        </div>
       </div>
     );
 };
