@@ -29,17 +29,18 @@ const Texas = () => {
   const [elections, setElections] = useState([]);
   const [vuid, setVuid] = useState('');
 
-  const generateFields = (option) => {
+
+  const generateVoterInfoFields = (option) => {
     if (option === 'VUID, Date of Birth') {
       return (
         <div className='form-container'>
           <div className='form-content'>
             <label>VUID:</label>
-            <input type="text" name="idVoter" onChange={handleChange}/>
+            <input type="text" name="idVoter" onChange={handleVoterChange}/>
           </div>
           <div className='form-content'>
             <label>Date of Birth:</label>
-            <input type="date" id="start" name="vuidDob" min="1900-01-01" onChange={handleChange}/>
+            <input type="date" id="start" name="vuidDob" min="1900-01-01" onChange={handleVoterChange}/>
           </div>
         </div>
       )
@@ -48,11 +49,11 @@ const Texas = () => {
         <div className='form-container'>
           <div className='form-content'>
             <label>TLD:</label>
-            <input type="text" name="idTdl" onChange={handleChange}/>
+            <input type="text" name="idTdl" onChange={handleVoterChange}/>
           </div>
           <div className='form-content'>
             <label>Date of Birth:</label>
-            <input type="date" id="start" name="tdlDob" min="1900-01-01" onChange={handleChange}/>
+            <input type="date" id="start" name="tdlDob" min="1900-01-01" onChange={handleVoterChange}/>
           </div>
         </div>
       )
@@ -61,31 +62,31 @@ const Texas = () => {
         <div className='form-container'>
           <div className='form-content'>
             <label>First Name:</label>
-            <input type="text" name="firstName" onChange={handleChange}/>
+            <input type="text" name="firstName" onChange={handleVoterChange}/>
           </div>
           <div className='form-content'>
             <label>Last Name:</label>
-            <input type="text" name="lastName" onChange={handleChange}/>
+            <input type="text" name="lastName" onChange={handleVoterChange}/>
           </div>
           <div className='form-content'>
             <label>Suffix:</label>
-            <input type="text" name="nmSuffix" onChange={handleChange}/>
+            <input type="text" name="nmSuffix" onChange={handleVoterChange}/>
           </div>
           <div className='form-content'>
             <label>County:</label>
-            <select name="county" onChange={handleChange}>
+            <select name="county" onChange={handleVoterChange}>
               {_.map(counties, (opt, index) => {
-                  return <option value={index}>{opt}</option>
+                  return <option value={index} key={index}>{opt}</option>
               })}
             </select>
           </div>
           <div className='form-content'>
             <label>Date of Birth:</label>
-            <input type="date" id="start" name="dob" min="1900-01-01" onChange={handleChange}/>
+            <input type="date" id="start" name="dob" min="1900-01-01" onChange={handleVoterChange}/>
           </div>
           <div className='form-content'>
             <label>Zipcode:</label>
-            <input type="text" name="adZip5" onChange={handleChange}/>
+            <input type="text" name="adZip5" onChange={handleVoterChange}/>
           </div>
         </div>
       )
@@ -96,7 +97,7 @@ const Texas = () => {
     setVoterOpt(event.target.value);
   }
 
-  const handleChange = (event) => {
+  const handleVoterChange = (event) => {
     const property = event.target.name;
     setValue({...value, [property]: event.target.value})
     if (property.match(/dob/i)) {
@@ -105,7 +106,7 @@ const Texas = () => {
     }
   }
 
-  const handleSubmit = async () => {
+  const handleSubmitVoterData = async () => {
     const resp = await Axios.post('http://localhost:3001/fetchVoterData', value);
     setElections(resp.data.elections);
     setVuid(resp.data.vuid);
