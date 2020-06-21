@@ -1,7 +1,12 @@
 import React, {useState} from 'react';
+import Axios from 'axios';
 import counties from './countyMap';
 import _ from 'lodash';
 
+// utils
+import formatDate from '../../../utils/formatDate';
+
+// styles
 import './style.css'
 
 const voterOptions = ['VUID, Date of Birth', 'TLD, Date of Birth', 'Name, County, Date of Birth']
@@ -9,16 +14,17 @@ const voterOptions = ['VUID, Date of Birth', 'TLD, Date of Birth', 'Name, County
 const Texas = () => {
   const [voterOpt, setVoterOpt] = useState(voterOptions[0])
   const [value, setValue] = useState({
-    idVoter: null,
-    vuidDob: null,
-    idTdl: null,
-    tdlDob: null,
-    firstName: null,
-    lastName: null,
-    nmSuffix: null,
-    county: null,
-    dob: null,
-    adZip5: null
+    selType: 'lfcd',
+    idVoter: '',
+    vuidDob: '',
+    idTdl: '',
+    tdlDob: '',
+    firstName: '',
+    lastName: '',
+    nmSuffix: '',
+    county: '',
+    dob: '',
+    adZip5: ''
   })
 
   const generateFields = (option) => {
@@ -91,6 +97,15 @@ const Texas = () => {
   const handleChange = (event) => {
     const property = event.target.name;
     setValue({...value, [property]: event.target.value})
+    if (property.match(/dob/i)) {
+      const formattedDate = formatDate(event.target.value);
+      setValue({ ...value, [property]: formattedDate });
+    }
+  }
+
+  const handleSubmit = async () => {
+    const resp = await Axios.post('http://localhost:3001/fetchVoterData', value);
+    console.log('what is resp?', resp);
   }
 
     return (
