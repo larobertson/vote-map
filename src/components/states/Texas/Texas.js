@@ -12,7 +12,7 @@ import './style.css'
 const voterOptions = ['VUID, Date of Birth', 'TLD, Date of Birth', 'Name, County, Date of Birth']
 
 const Texas = () => {
-  const [voterOpt, setVoterOpt] = useState(voterOptions[0])
+  const [voterOpt, setVoterOpt] = useState(voterOptions[0]);
   const [value, setValue] = useState({
     selType: 'lfcd',
     idVoter: '',
@@ -25,7 +25,9 @@ const Texas = () => {
     county: '',
     dob: '',
     adZip5: ''
-  })
+  });
+  const [elections, setElections] = useState([]);
+  const [vuid, setVuid] = useState('');
 
   const generateFields = (option) => {
     if (option === 'VUID, Date of Birth') {
@@ -105,7 +107,18 @@ const Texas = () => {
 
   const handleSubmit = async () => {
     const resp = await Axios.post('http://localhost:3001/fetchVoterData', value);
-    console.log('what is resp?', resp);
+    setElections(resp.data.elections);
+    setVuid(resp.data.vuid);
+  }
+
+  const findElectionLocations = async (event) => {
+    const postData = {
+      idElection: event.target.value,
+      vuid
+    }
+    console.log('findElectionLocations', postData);
+    const resp = await Axios.post('http://localhost:3001/fetchPollingLocations', postData);
+    console.log('resp', resp.data);
   }
 
     return (
@@ -117,18 +130,21 @@ const Texas = () => {
             })}
           </select>
           <div className='form-picker'>
-            {generateFields(voterOpt)}
+            {generateVoterInfoFields(voterOpt)}
           </div>
           <input className='submit-btn'
           type="button"
           value="Submit"
-          onClick={handleSubmit}/>
+          onClick={handleSubmitVoterData}/>
         </div>
         <div className='elections-container'>
-
+          {_.map(elections, (obj, index) => {
+            return (
+              <button value={obj.number} onClick={findElectionLocations}>{obj.election}</button>
+            )
+          })}
         </div>
         <div className='location-container'>
-
         </div>
       </div>
     );
