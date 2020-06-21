@@ -4,24 +4,68 @@ const _ = require('lodash');
 
 const grabUpcomingElections = async (response) => {
   const $ = cheerio.load(response);
-  // const dom = $.html();
-  // console.log('what is dom???', dom);
-  // .bodycontent2 table table a
+  const vuidRaw = $('table.boxshadow td span:contains(VUID)').text();
+  const vuid = vuidRaw.match(/(\d+)/)[1];
   const tables = $('.bodycontent2 table table a');
-  console.log('tables', tables.length);
   const elections = _.map(tables, (el) => {
     const $el = $(el);
     const electionNumRaw = $el.attr('href');
     const electionNum = electionNumRaw.match(/\('(\d+)/)[1];
-    return {election: $(el).text(), number:electionNum};
+    return {election: $el.text(), number: electionNum};
   })
-  return elections;
+  return {elections, vuid};
 }
 
 const grabAllAddresses = async (response) => {
   const $ = cheerio.load(response);
-  // grab all the addresses
-  // throw them into an array and return that to the client
+  const allLocationRows = $('table.boxshadow table tr');
+
+  
+  const earlyVotingIndex = _.findIndex(allLocationRows, (el) => {
+    const $el = $(el);
+    return $el.text().trim() === 'Early Voting Poll Places';
+  })
+  const electionDayIndex = _.findIndex(allLocationRows, (el) => {
+    const $el = $(el);
+    return $el.text().trim() === 'Election Day Poll Places';
+  })
+  
+  const electionDayRows = allLocationRows.slice(electionDayIndex + 2, earlyVotingIndex);
+  const earlyVotingRows = allLocationRows.slice(earlyVotingIndex + 1);
+  
+  const electionDayLocations = _.map(electionDayRows, (el) => {
+    const cols = $(el).children();
+    const row = _.reduce(cols, (obj, td, key) => {
+      const $td = $(td);
+      if (key === 0) {
+        obj['name'] = $td.text();
+      } else if (key === 1) {
+        obj['address'] = $td.text();
+      } else if (key === 2) {
+        obj['timings'] = $td.text();
+      }
+      return obj;
+    }, {})
+    return row;
+  });
+
+  const earlyVotingLocations = _.map(earlyVotingRows, (el) => {
+    const cols = $(el).children();
+    const row = _.reduce(cols, (obj, td, key) => {
+      const $td = $(td);
+      if (key === 0) {
+        obj['name'] = $td.text();
+      } else if (key === 1) {
+        obj['address'] = $td.text();
+      } else if (key === 2) {
+        obj['timings'] = $td.text();
+      }
+      return obj;
+    }, {})
+    return row;
+  })
+
+  return {earlyVotingLocations, electionDayLocations};
 }
 
-module.exports = {grabUpcomingElections}
+module.exports = {grabUpcomingElections, grabAllAddresses}
