@@ -6,6 +6,9 @@ import _ from 'lodash';
 // utils
 import formatDate from '../../../utils/formatDate';
 
+// components
+import MapContainer from './MapContainer';
+
 // styles
 import './style.css'
 
@@ -160,6 +163,7 @@ const Texas = () => {
           })}
         </div>
         <div className='location-container'>
+          <MapContainer/>
         </div>
       </div>
     );
