@@ -6,8 +6,8 @@ import _ from 'lodash';
 const mapKey = `${process.env.REACT_APP_MAP_API_KEY}`;
 
 const SetPin = (props) => {
-  const [lat, setLat] = useState();
-  const [lng, setLng] = useState();
+  const [lat, setLat] = useState(props.lat);
+  const [lng, setLng] = useState(props.lng);
   console.log('props???', props);
 
   const {
