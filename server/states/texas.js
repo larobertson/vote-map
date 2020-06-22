@@ -5,15 +5,17 @@ const _ = require('lodash');
 const grabUpcomingElections = async (response) => {
   const $ = cheerio.load(response);
   const vuidRaw = $('table.boxshadow td span:contains(VUID)').text();
+  const addressRaw = $('#fullNameSpan').parent().text();
   const vuid = vuidRaw.match(/(\d+)/)[1];
+  const voterAddress = addressRaw.match(/Address: ([\w+\s+]+)\n/)[1];
   const tables = $('.bodycontent2 table table a');
   const elections = _.map(tables, (el) => {
     const $el = $(el);
     const electionNumRaw = $el.attr('href');
     const electionNum = electionNumRaw.match(/\('(\d+)/)[1];
     return {election: $el.text(), number: electionNum};
-  })
-  return {elections, vuid};
+  });
+  return {elections, vuid, voterAddress};
 }
 
 const grabAllAddresses = async (response) => {
