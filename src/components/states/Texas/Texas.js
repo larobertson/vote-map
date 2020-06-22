@@ -30,8 +30,12 @@ const Texas = () => {
     adZip5: ''
   });
   const [elections, setElections] = useState([]);
+  const [voterAddress, setVoterAddress] = useState(null);
   const [vuid, setVuid] = useState('');
   const [error, setError] = useState(false);
+
+  const [electionDayLocations, setElectionDayLocations] = useState([]);
+  const [earlyVotingLocations, setEarlyVotingLocations] = useState([]);
 
   const renderError = () => {
     // put an alert tag here
@@ -120,11 +124,11 @@ const Texas = () => {
       const resp = await Axios.post('http://localhost:3001/fetchVoterData', value);
       setElections(resp.data.elections);
       setVuid(resp.data.vuid);
+      setVoterAddress(resp.data.voterAddress);
       if (error) {
         setError(false);
       }
     } catch (e) {
-      // console.log('what is e?', e);
       setError(true);
     }
   }
@@ -136,8 +140,12 @@ const Texas = () => {
     }
     console.log('findElectionLocations', postData);
     const resp = await Axios.post('http://localhost:3001/fetchPollingLocations', postData);
+    setEarlyVotingLocations(resp.data.earlyVotingLocations);
+    setElectionDayLocations(resp.data.electionDayLocations);
     console.log('resp', resp.data);
   }
+
+
 
     return (
       <div className='container'>
@@ -163,7 +171,7 @@ const Texas = () => {
           })}
         </div>
         <div className='location-container'>
-          <MapContainer/>
+          <MapContainer voterAddress={voterAddress} earlyVotingLocations={earlyVotingLocations} electionDayLocations={electionDayLocations}/>
         </div>
       </div>
     );
