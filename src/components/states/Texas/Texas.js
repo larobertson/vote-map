@@ -36,6 +36,7 @@ const Texas = () => {
 
   const [electionDayLocations, setElectionDayLocations] = useState([]);
   const [earlyVotingLocations, setEarlyVotingLocations] = useState([]);
+  const [showEarlyVotingLocations, setShowEarlyVotingLocations] = useState(true);
 
   const renderError = () => {
     // put an alert tag here
@@ -164,14 +165,15 @@ const Texas = () => {
           onClick={handleSubmitVoterData}/>
         </div>
         <div className='elections-container'>
+          <h3>Upcoming Elections</h3>
           {error ? <p>Something went wrong</p> : _.map(elections, (obj, index) => {
             return (
-              <button value={obj.number} onClick={findElectionLocations}>{obj.election}</button>
+              <button className='election-button' value={obj.number} onClick={findElectionLocations}>{obj.election}</button>
             )
           })}
         </div>
         <div className='location-container'>
-          <MapContainer voterAddress={voterAddress} earlyVotingLocations={earlyVotingLocations} electionDayLocations={electionDayLocations}/>
+          <MapContainer voterAddress={voterAddress} earlyVotingLocations={earlyVotingLocations} electionDayLocations={electionDayLocations} showEarlyVotingLocations={showEarlyVotingLocations}/>
         </div>
       </div>
     );

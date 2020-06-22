@@ -14,12 +14,13 @@ const SetPin = (props) => {
     map,
     google,
     mapCenter,
+    address
   } = props;
 
 
   useEffect(() => {
     const getMarker = async () => {
-      let addressQ = (props.address).split(' ').join('+')
+      let addressQ = address ? (address).split(' ').join('+') : '';
       const reqUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressQ}&key=${mapKey}`;
       const res = await Axios.get(reqUrl);
       console.log('res', res);
@@ -29,7 +30,7 @@ const SetPin = (props) => {
       console.log(lat, lng);
     }
     getMarker();
-  }, [lat, lng])
+  }, [address, lat, lng])
 
   return (
       <Marker map={map} google={google} mapCenter={mapCenter} position={{lat, lng}}/>

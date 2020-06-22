@@ -22,6 +22,7 @@
   flex-wrap: wrap;
   margin: 2%;
   background-color: tan;
+  border-radius: 5px;
 }
 
 .location-container {
@@ -62,6 +63,11 @@ label {
   border-radius: 5px;
   height: 5vh;
   width: 10vw;
+}
+
+.election-button {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 /* input, select {

@@ -22,6 +22,7 @@ export const MapContainer = (props) =>{
     voterAddress,
     earlyVotingLocations,
     electionDayLocations,
+    showEarlyVotingLocations
   } = props;
 
   const [lat, setLat] = useState(31.5686);
@@ -57,7 +58,10 @@ export const MapContainer = (props) =>{
         }}
       >
         {voterAddress ? <SetPin address={voterAddress} /> : null}
-        {earlyVotingLocations.length ? _.map(earlyVotingLocations, (loc) => {
+        {earlyVotingLocations.length && earlyVotingLocations[0].address && showEarlyVotingLocations ? _.map(earlyVotingLocations, (loc) => {
+          return <SetPin address={loc.address} lat={lat} lng={lng} />
+        }) : null}
+        {electionDayLocations.length && electionDayLocations[0].address && !showEarlyVotingLocations ? _.map(electionDayLocations, (loc) => {
           return <SetPin address={loc.address} lat={lat} lng={lng} />
         }) : null}
         {/* <SetPin voterAddress={voterAddress} earlyVotingLocations={earlyVotingLocations} electionDayLocations={electionDayLocations}/> */}
