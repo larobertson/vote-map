@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Map, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import Axios from 'axios';
 import _ from 'lodash';
 
@@ -57,13 +57,14 @@ export const MapContainer = (props) =>{
          lng: -99.9018
         }}
       >
-        {voterAddress ? <SetPin address={voterAddress} /> : null}
+        {voterAddress ? <SetPin address={voterAddress} name={'My Address'} /> : null}
         {earlyVotingLocations.length && earlyVotingLocations[0].address && showEarlyVotingLocations ? _.map(earlyVotingLocations, (loc) => {
-          return <SetPin address={loc.address} lat={lat} lng={lng} />
+          return <SetPin address={loc.address} name={loc.name} time={loc.time} lat={lat} lng={lng} />
         }) : null}
         {electionDayLocations.length && electionDayLocations[0].address && !showEarlyVotingLocations ? _.map(electionDayLocations, (loc) => {
-          return <SetPin address={loc.address} lat={lat} lng={lng} />
+          return <SetPin address={loc.address} name={loc.name} time={loc.time} lat={lat} lng={lng} />
         }) : null}
+        <InfoWindow/>
         {/* <SetPin voterAddress={voterAddress} earlyVotingLocations={earlyVotingLocations} electionDayLocations={electionDayLocations}/> */}
       </Map>
     );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Marker } from 'google-maps-react';
+import { Marker, InfoWindow } from 'google-maps-react';
 import Axios from 'axios';
 import _ from 'lodash';
 
@@ -8,13 +8,18 @@ const mapKey = `${process.env.REACT_APP_MAP_API_KEY}`;
 const SetPin = (props) => {
   const [lat, setLat] = useState(props.lat);
   const [lng, setLng] = useState(props.lng);
+  const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  const [activeMarker, setActiveMarker] = useState();
+  const [selectedPlace, setSelectedPlace] = useState();
   console.log('props???', props);
 
   const {
     map,
     google,
     mapCenter,
-    address
+    address,
+    name,
+    time
   } = props;
 
 
@@ -32,8 +37,33 @@ const SetPin = (props) => {
     getMarker();
   }, [address, lat, lng])
 
+  const onMarkerClick = (props, marker, e) => {
+    console.log('onMarkerClick', props, marker, e);
+    setSelectedPlace(name);
+    setActiveMarker(marker);
+    setShowingInfoWindow(true);
+  }
+
+const onClose = props => {
+  if (showingInfoWindow) {
+      setShowingInfoWindow(false);
+      setActiveMarker(null);
+  }
+};
+
   return (
-      <Marker map={map} google={google} mapCenter={mapCenter} position={{lat, lng}}/>
+    <>
+      <Marker map={map} google={google} mapCenter={mapCenter} position={{lat, lng}} name={name} onClick={onMarkerClick}/>
+      <InfoWindow map={map} google={google} mapCenter={mapCenter} marker={activeMarker}
+          visible={showingInfoWindow}
+          onClose={onClose}>
+            <div>
+            <h4>{name}</h4>
+            <p>{address}</p>
+            <p>{time}</p>
+          </div>
+      </InfoWindow>
+    </>
   );
 };
 
