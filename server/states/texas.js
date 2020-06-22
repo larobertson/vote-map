@@ -7,7 +7,7 @@ const grabUpcomingElections = async (response) => {
   const vuidRaw = $('table.boxshadow td span:contains(VUID)').text();
   const addressRaw = $('#fullNameSpan').parent().text();
   const vuid = vuidRaw.match(/(\d+)/)[1];
-  const voterAddress = addressRaw.match(/Address: ([\w+\s+]+)\n/)[1];
+  const voterAddress = addressRaw.match(/Address: ([\w+\s+]+)[-,\n]/)[1];
   const tables = $('.bodycontent2 table table a');
   const elections = _.map(tables, (el) => {
     const $el = $(el);
