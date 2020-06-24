@@ -55,19 +55,23 @@
   height: 40vh;
   /* margin: 2%; */
   background-color: gainsboro;
+  z-index: 20;
 }
 
-/* .toggle {
-  display: block;
+.toggle {
+  z-index: 21;
+  /* display: block;
   position: absolute;
-  right: 0;
-} */
+  right: 0; */
+}
 
 .toggleBtn {
   width: 150px;
   height: 30px;
   color: white;
   background-color: blue;
+  z-index: 22;
+  margin: 2px;
 }
 
 /* .early-elections {

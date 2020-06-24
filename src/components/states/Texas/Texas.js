@@ -149,6 +149,10 @@ const Texas = () => {
     console.log('resp', resp.data);
   }
 
+  const toggleElections = (isEarlyElection) => {
+    setShowEarlyVotingLocations(isEarlyElection);
+  }
+
 
 
     return (
@@ -183,8 +187,8 @@ const Texas = () => {
           </div>
           <div className='address-lists'>
             <div className='toggle'>
-              <Button btnText={'Early Elections'} />
-              <Button btnText={'Election Day'} />
+              <Button btnText={'Early Elections'} toggleElections={() => toggleElections(true)} />
+              <Button btnText={'Election Day'} toggleElections={() => toggleElections(false)} />
             </div>
             {/* <div className='early-elections'>
               <p>ladksfjlkdasjfksdla</p>

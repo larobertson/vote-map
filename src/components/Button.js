@@ -3,7 +3,7 @@ import React from 'react';
 const Button = (props) => {
   return (
     <>
-      <button className='toggleBtn'>{props.btnText}</button>
+      <button className='toggleBtn' onClick={props.toggleElections}>{props.btnText}</button>
     </>
   );
 };
