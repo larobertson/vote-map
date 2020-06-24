@@ -12,6 +12,8 @@ import MapContainer from './MapContainer';
 // styles
 import './style.css'
 
+const host = 'http://localhost:4022'
+
 const voterOptions = ['VUID, Date of Birth', 'TLD, Date of Birth', 'Name, County, Date of Birth']
 
 const Texas = () => {
@@ -122,7 +124,7 @@ const Texas = () => {
 
   const handleSubmitVoterData = async () => {
     try {
-      const resp = await Axios.post('http://localhost:3001/fetchVoterData', value);
+      const resp = await Axios.post(`${host}/fetchVoterData`, value);
       setElections(resp.data.elections);
       setVuid(resp.data.vuid);
       setVoterAddress(resp.data.voterAddress);
@@ -140,7 +142,7 @@ const Texas = () => {
       vuid
     }
     console.log('findElectionLocations', postData);
-    const resp = await Axios.post('http://localhost:3001/fetchPollingLocations', postData);
+    const resp = await Axios.post(`${host}/fetchPollingLocations`, postData);
     setEarlyVotingLocations(resp.data.earlyVotingLocations);
     setElectionDayLocations(resp.data.electionDayLocations);
     console.log('resp', resp.data);

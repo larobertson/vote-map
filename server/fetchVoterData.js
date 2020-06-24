@@ -4,6 +4,7 @@ const axios = require('axios');
 
 // custom utils
 const {formData} = require('./utils/formData.js');
+const {randomUserAgent} = require('./utils/randomUserAgent');
 
 
 const {grabUpcomingElections} = require('./states/texas');
@@ -16,7 +17,13 @@ router.use(bodyParser.json());
 router.post('/', async (req, res, next) => {
   try {
     const value = formData(req.body);
-    const voterDetailsResp = await axios.post('https://teamrv-mvp.sos.texas.gov/MVP/voterDetails.do', value);
+    console.log('randomeUserAgent', randomUserAgent());
+    const headers = {
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'user-agent': randomUserAgent()
+    }
+    const voterDetailsResp = await axios({method: 'POST', url:'https://teamrv-mvp.sos.texas.gov/MVP/voterDetails.do', data: {value}, headers});
     const respData = voterDetailsResp.data;
     const elections = await grabUpcomingElections(respData);
     res.send(elections);
