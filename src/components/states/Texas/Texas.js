@@ -8,6 +8,7 @@ import formatDate from '../../../utils/formatDate';
 
 // components
 import MapContainer from './MapContainer';
+import Button from '../../Button';
 
 // styles
 import './style.css'
@@ -152,30 +153,46 @@ const Texas = () => {
 
     return (
       <div className='container'>
-        <div className='voter-info-container'>
-          <select onChange={handleVoterOptSelection}>
-            {_.map(voterOptions, (opt, key) => {
-                return <option key={key}>{opt}</option>
-            })}
-          </select>
-          <div className='form-picker'>
-            {generateVoterInfoFields(voterOpt)}
+        <div className='election-info-row'>
+          <div className='voter-info-container'>
+            <select onChange={handleVoterOptSelection}>
+              {_.map(voterOptions, (opt, key) => {
+                  return <option key={key}>{opt}</option>
+              })}
+            </select>
+            <div className='form-picker'>
+              {generateVoterInfoFields(voterOpt)}
+            </div>
+            <input className='submit-btn'
+            type="button"
+            value="Submit"
+            onClick={handleSubmitVoterData}/>
           </div>
-          <input className='submit-btn'
-          type="button"
-          value="Submit"
-          onClick={handleSubmitVoterData}/>
-        </div>
-        <div className='elections-container'>
-          <h3>Upcoming Elections</h3>
-          {error ? <p>Something went wrong</p> : _.map(elections, (obj, index) => {
-            return (
-              <button className='election-button' value={obj.number} onClick={findElectionLocations}>{obj.election}</button>
-            )
-          })}
+          <div className='elections-container'>
+            <h3>Upcoming Elections</h3>
+            {error ? <p>Something went wrong</p> : _.map(elections, (obj, index) => {
+              return (
+                <button className='election-button' value={obj.number} onClick={findElectionLocations}>{obj.election}</button>
+              )
+            })}
+          </div>
         </div>
         <div className='location-container'>
+          <div className='map-flex-container'>
           <MapContainer voterAddress={voterAddress} earlyVotingLocations={earlyVotingLocations} electionDayLocations={electionDayLocations} showEarlyVotingLocations={showEarlyVotingLocations}/>
+          </div>
+          <div className='address-lists'>
+            <div className='toggle'>
+              <Button btnText={'Early Elections'} />
+              <Button btnText={'Election Day'} />
+            </div>
+            {/* <div className='early-elections'>
+              <p>ladksfjlkdasjfksdla</p>
+            </div>
+            <div className='election-day'>
+              <p>ladksfjlkdasjfksdla</p>
+            </div> */}
+          </div>
         </div>
       </div>
     );

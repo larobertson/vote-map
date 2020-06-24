@@ -10,7 +10,6 @@ const mapKey = `${process.env.REACT_APP_MAP_API_KEY}`;
 const mapStyles = {
   width: '70vw',
   height: '70vh',
-  left: '13%'
 };
 
 export const MapContainer = (props) =>{
