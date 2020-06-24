@@ -6,7 +6,7 @@ const fetchVoterData = require('./fetchVoterData');
 const fetchPollingLocations = require('./fetchPollingLocations')
 
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 4022;
 
 const app = express();
 app.use(cors());
