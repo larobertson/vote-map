@@ -160,6 +160,16 @@ const Texas = () => {
     setShowEarlyVotingLocations(isEarlyElection);
   }
 
+  const populateAddressSideNav = (location, key) => {
+    return (
+      <div className='loc' key={key}>
+        <h3>{location.name}</h3>
+        <p>{location.address}</p>
+        <p>{location.timings}</p>
+      </div>
+    )
+  }
+
 
 
     return (
@@ -197,12 +207,9 @@ const Texas = () => {
               <Button btnText={'Early Elections'} toggleElections={() => toggleElections(true)} />
               <Button btnText={'Election Day'} toggleElections={() => toggleElections(false)} />
             </div>
-            {/* <div className='early-elections'>
-              <p>ladksfjlkdasjfksdla</p>
+            <div className='addresses'>
+              {showEarlyVotingLocations && earlyVotingLocations.length ? _.map(earlyVotingLocations, (loc, key) => { return populateAddressSideNav(loc, key) }) : electionDayLocations.length ? _.map(electionDayLocations, (loc, key) => { return populateAddressSideNav(loc, key) }) : null}
             </div>
-            <div className='election-day'>
-              <p>ladksfjlkdasjfksdla</p>
-            </div> */}
           </div>
         </div>
       </div>
