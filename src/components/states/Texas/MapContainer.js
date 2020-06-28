@@ -4,12 +4,15 @@ import Axios from 'axios';
 import _ from 'lodash';
 
 import SetPin from './SetPin';
+import useMediaQuery from '../../../customHooks/useMediaQuery';
 
 const mapKey = `${process.env.REACT_APP_MAP_API_KEY}`;
 
 const mapStyles = {
-  width: '70vw',
-  height: '70vh',
+  size: shouldExpandMap => ({
+    width: shouldExpandMap ? '100%' : '70vw',
+    height: '70vh'
+  })
 };
 
 export const MapContainer = (props) =>{
@@ -19,6 +22,8 @@ export const MapContainer = (props) =>{
     electionDayLocations,
     showEarlyVotingLocations
   } = props;
+
+  const shouldExpandMap = useMediaQuery('(max-width: 900px)');
 
   const [lat, setLat] = useState(31.5686);
   const [lng, setLng] = useState(-99.9018);
@@ -45,7 +50,7 @@ export const MapContainer = (props) =>{
       <Map
         google={props.google}
         zoom={zoom}
-        style={mapStyles}
+        style={mapStyles.size(shouldExpandMap)}
         center = {{lat, lng}}
         initialCenter={{
          lat: 31.5686,
