@@ -10,6 +10,7 @@
 .election-info-row {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   min-height: 40vh;
 }
 
@@ -18,7 +19,7 @@
   flex-direction: column;
   width: 40%;
   flex-wrap: wrap;
-  margin: 2%;
+  margin: 2% 0 2%;
 }
 
 .elections-container {
@@ -26,7 +27,7 @@
   flex-direction: column;
   width: 50%;
   flex-wrap: wrap;
-  margin: 2%;
+  margin: 2% 0 2%;
   background-color: firebrick;
   border-radius: 5px;
 }
@@ -58,6 +59,16 @@
   z-index: 20;
 }
 
+.addresses {
+  overflow: scroll;
+  width: 25vw;
+  height: 65vh;
+}
+
+.loc {
+  border-bottom: solid black 2px;
+}
+
 .toggle {
   z-index: 21;
   /* display: block;
@@ -70,6 +81,7 @@
   height: 30px;
   color: white;
   background-color: blue;
+  border-radius: 5px;
   z-index: 22;
   margin: 2px;
 }
