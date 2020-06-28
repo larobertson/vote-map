@@ -14,7 +14,7 @@ import Button from '../../Button';
 // styles
 import './style.css'
 
-const host = 'http://localhost:4022'
+const host = window.location.hostname === 'localhost' ? `${process.env.REACT_APP_DEV_SERVER}` : `${process.env.REACT_APP_SERVER}`
 
 const voterOptions = ['VUID, Date of Birth', 'TLD, Date of Birth', 'Name, County, Date of Birth']
 
@@ -33,7 +33,7 @@ const Texas = () => {
     dob: '',
     adZip5: ''
   });
-  const [elections, setElections] = useState([]);
+  const [elections, setElections] = useState([{election: '11/03/2020--2020 NOVEMBER 3RD GENERAL ELECTION'}, {election: '07/14/2020--2020 JULY 14TH DEMOCRATIC PRIMARY RUNOFF'}, {election: '07/14/2020--2020 SPECIAL ELECTION SENATE DISTRICT 14'}]);
   const [voterAddress, setVoterAddress] = useState(null);
   const [vuid, setVuid] = useState('');
   const [error, setError] = useState(false);
