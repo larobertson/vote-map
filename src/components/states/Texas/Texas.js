@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 // utils
 import formatDate from '../../../utils/formatDate';
+import todaysDate from '../../../utils/todaysDate';
 
 // components
 import MapContainer from './MapContainer';
@@ -51,60 +52,66 @@ const Texas = () => {
     if (option === 'VUID, Date of Birth') {
       return (
         <div className='form-container'>
-          <div className='form-content'>
-            <label>VUID:</label>
-            <input type="text" name="idVoter" onChange={handleVoterChange}/>
-          </div>
-          <div className='form-content'>
-            <label>Date of Birth:</label>
-            <input type="date" id="start" name="vuidDob" min="1900-01-01" onChange={handleVoterChange}/>
-          </div>
+          <form id="option1">   
+            <div className='form-content'>
+              <label>VUID:</label>
+              <input type="text" id="idVoter" name="idVoter" pattern="\d+" minLength="10" maxLength="10" value={value.idVoter} onChange={handleVoterChange}/>
+            </div>
+            <div className='form-content'>
+              <label>Date of Birth:</label>
+              <input type="date" id="vuidDob" name="vuidDob" min="1900-01-01" max={todaysDate()} maxLength="10" onChange={handleVoterChange}/>
+            </div>
+          </form>
         </div>
       )
     } else if (option === 'TLD, Date of Birth') {
       return (
         <div className='form-container'>
-          <div className='form-content'>
-            <label>TLD:</label>
-            <input type="text" name="idTdl" onChange={handleVoterChange}/>
-          </div>
-          <div className='form-content'>
-            <label>Date of Birth:</label>
-            <input type="date" id="start" name="tdlDob" min="1900-01-01" onChange={handleVoterChange}/>
-          </div>
+          <form id="option2">
+            <div className='form-content'>
+              <label>TLD:</label>
+              <input type="text" id="idTdl" name="idTdl" pattern="\d+" minLength="8" maxLength="8" value={value.idTdl} onChange={handleVoterChange}/>
+            </div>
+            <div className='form-content'>
+              <label>Date of Birth:</label>
+              <input type="date" id="tdlDob" name="tdlDob" min="1900-01-01" max={todaysDate()} onChange={handleVoterChange}/>
+            </div>
+          </form>
         </div>
       )
     } else if (option === 'Name, County, Date of Birth') {
       return (
         <div className='form-container'>
-          <div className='form-content'>
-            <label>First Name:</label>
-            <input type="text" name="firstName" onChange={handleVoterChange}/>
-          </div>
-          <div className='form-content'>
-            <label>Last Name:</label>
-            <input type="text" name="lastName" onChange={handleVoterChange}/>
-          </div>
-          <div className='form-content'>
-            <label>Suffix:</label>
-            <input type="text" name="nmSuffix" onChange={handleVoterChange}/>
-          </div>
-          <div className='form-content'>
-            <label>County:</label>
-            <select name="county" onChange={handleVoterChange}>
-              {_.map(counties, (opt, index) => {
-                  return <option value={index} key={index}>{opt}</option>
-              })}
-            </select>
-          </div>
-          <div className='form-content'>
-            <label>Date of Birth:</label>
-            <input type="date" id="start" name="dob" min="1900-01-01" onChange={handleVoterChange}/>
-          </div>
-          <div className='form-content'>
-            <label>Zipcode:</label>
-            <input type="text" name="adZip5" onChange={handleVoterChange}/>
-          </div>
+          <form id="option3">
+            <div className='form-content'>
+              <label>First Name:</label>
+              <input type="text" id="firstName" name="firstName" maxLength="30" value={value.firstName} onChange={handleVoterChange}/>
+            </div>
+            <div className='form-content'>
+              <label>Last Name:</label>
+              <input type="text" id="lastName" name="lastName" maxLength="30" value={value.lastName} onChange={handleVoterChange}/>
+            </div>
+            <div className='form-content'>
+              <label>Suffix:</label>
+              <input type="text" id="nmSuffix" name="nmSuffix" maxLength="20" value={value.nmSuffix} onChange={handleVoterChange}/>
+            </div>
+            <div className='form-content'>
+              <label>County:</label>
+              <select id="county" name="county" value={value.county} onChange={handleVoterChange}>
+                {_.map(counties, (opt, index) => {
+                    return <option value={index} key={index}>{opt}</option>
+                })}
+              </select>
+            </div>
+            <div className='form-content'>
+              <label>Date of Birth:</label>
+              <input type="date" id="dob" name="dob" min="1900-01-01" max={todaysDate()} maxLength="10" onChange={handleVoterChange}/>
+            </div>
+            <div className='form-content'>
+              <label>Zipcode:</label>
+              <input type="text" id="adZip5" name="adZip5" pattern="\d+" minLength="5" maxLength="5" value={value.adZip5} onChange={handleVoterChange}/>
+            </div>
+          </form>
         </div>
       )
     }
