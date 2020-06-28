@@ -13,10 +13,6 @@ const mapStyles = {
 };
 
 export const MapContainer = (props) =>{
-  // we can add a change in zoom and lat, lng when voterAddress is present
-  // TODO: add useEffect to alter zoom
-  // hit the geolocation API for voterAddress
-
   const {
     voterAddress,
     earlyVotingLocations,
@@ -56,7 +52,7 @@ export const MapContainer = (props) =>{
          lng: -99.9018
         }}
       >
-        {voterAddress ? <SetPin address={voterAddress} name={'My Address'} /> : null}
+        {voterAddress ? <SetPin address={voterAddress} origin={true} name={'My Address'} /> : null}
         {earlyVotingLocations.length && earlyVotingLocations[0].address && showEarlyVotingLocations ? _.map(earlyVotingLocations, (loc) => {
           return <SetPin address={loc.address} name={loc.name} time={loc.time} lat={lat} lng={lng} />
         }) : null}
@@ -64,7 +60,6 @@ export const MapContainer = (props) =>{
           return <SetPin address={loc.address} name={loc.name} time={loc.time} lat={lat} lng={lng} />
         }) : null}
         <InfoWindow/>
-        {/* <SetPin voterAddress={voterAddress} earlyVotingLocations={earlyVotingLocations} electionDayLocations={electionDayLocations}/> */}
       </Map>
     );
 }

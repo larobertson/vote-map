@@ -3,6 +3,8 @@ import { Marker, InfoWindow } from 'google-maps-react';
 import Axios from 'axios';
 import _ from 'lodash';
 
+import star from '../../../staricon.png'
+
 const mapKey = `${process.env.REACT_APP_MAP_API_KEY}`;
 
 const SetPin = (props) => {
@@ -11,7 +13,6 @@ const SetPin = (props) => {
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
   const [selectedPlace, setSelectedPlace] = useState();
-  console.log('props???', props);
 
   const {
     map,
@@ -19,7 +20,8 @@ const SetPin = (props) => {
     mapCenter,
     address,
     name,
-    time
+    time,
+    origin
   } = props;
 
 
@@ -28,11 +30,8 @@ const SetPin = (props) => {
       let addressQ = address ? (address).split(' ').join('+') : '';
       const reqUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressQ}&key=${mapKey}`;
       const res = await Axios.get(reqUrl);
-      console.log('res', res);
-      console.log('lat lng?', _.get(res, 'data.results[0].geometry.location.lat'), _.get(res, 'data.results[0].geometry.location.lng'));
       setLat(_.get(res, 'data.results[0].geometry.location.lat'));
       setLng(_.get(res, 'data.results[0].geometry.location.lng'));
-      console.log(lat, lng);
     }
     getMarker();
   }, [address, lat, lng])
@@ -53,7 +52,7 @@ const onClose = props => {
 
   return (
     <>
-      <Marker map={map} google={google} mapCenter={mapCenter} position={{lat, lng}} name={name} onClick={onMarkerClick}/>
+      <Marker map={map} google={google} mapCenter={mapCenter} position={{lat, lng}} icon={origin ? star : null} name={name} onClick={onMarkerClick}/>
       <InfoWindow map={map} google={google} mapCenter={mapCenter} marker={activeMarker}
           visible={showingInfoWindow}
           onClose={onClose}>
