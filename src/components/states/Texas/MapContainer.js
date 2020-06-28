@@ -23,7 +23,7 @@ export const MapContainer = (props) =>{
     showEarlyVotingLocations
   } = props;
 
-  const shouldExpandMap = useMediaQuery('(max-width: 900px)');
+  const shouldExpandMap = useMediaQuery('(max-width: 1232px)');
 
   const [lat, setLat] = useState(31.5686);
   const [lng, setLng] = useState(-99.9018);
