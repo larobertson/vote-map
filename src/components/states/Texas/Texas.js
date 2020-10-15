@@ -149,11 +149,9 @@ const Texas = () => {
       idElection: event.target.value,
       vuid
     }
-    console.log('findElectionLocations', postData);
     const resp = await Axios.post(`${host}/fetchPollingLocations`, postData);
     setEarlyVotingLocations(resp.data.earlyVotingLocations);
     setElectionDayLocations(resp.data.electionDayLocations);
-    console.log('resp', resp.data);
   }
 
   const toggleElections = (isEarlyElection) => {

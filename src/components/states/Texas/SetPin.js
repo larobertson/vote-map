@@ -37,7 +37,6 @@ const SetPin = (props) => {
   }, [address, lat, lng])
 
   const onMarkerClick = (props, marker, e) => {
-    console.log('onMarkerClick', props, marker, e);
     setSelectedPlace(name);
     setActiveMarker(marker);
     setShowingInfoWindow(true);

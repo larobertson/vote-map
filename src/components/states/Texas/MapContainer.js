@@ -35,12 +35,9 @@ export const MapContainer = (props) =>{
         let addressQ = (voterAddress).split(' ').join('+')
         const reqUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressQ}&key=${mapKey}`;
         const res = await Axios.get(reqUrl);
-        console.log('res', res);
-        console.log('lat lng?', _.get(res, 'data.results[0].geometry.location.lat'), _.get(res, 'data.results[0].geometry.location.lng'));
         setLat(_.get(res, 'data.results[0].geometry.location.lat'));
         setLng(_.get(res, 'data.results[0].geometry.location.lng'));
         setZoom(12);
-        console.log(lat, lng);
       }
       getGeocode();
     }
