@@ -16,8 +16,34 @@ router.use(bodyParser.json());
 
 router.post('/', async (req, res, next) => {
   try {
-    const value = formData(req.body);
-    console.log('randomeUserAgent', randomUserAgent());
+    const {
+      selType,
+      idVoter,
+      vuidDob,
+      idTdl,
+      tdlDob,
+      firstName,
+      lastName,
+      nmSuffix,
+      county,
+      dob,
+      adZip5,
+    } = req.body;
+
+    const orderedValues = {
+      selType,
+      firstName,
+      lastName,
+      nmSuffix,
+      county,
+      dob,
+      adZip5,
+      idVoter,
+      vuidDob,
+      idTdl,
+      tdlDob,
+      }
+    const value = formData(orderedValues);
     const headers = {
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
       'Content-Type': 'application/x-www-form-urlencoded',

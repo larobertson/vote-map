@@ -4,6 +4,8 @@ const _ = require('lodash');
 
 const grabUpcomingElections = async (response) => {
   const $ = cheerio.load(response);
+  // const vuidRaw = $('body').text().match(/VUID: (\d+)/);
+  // const addressRaw = $('body').text().match(/Address: ([\w\s]+)\n/);
   const vuidRaw = $('table.boxshadow td span:contains(VUID)').text();
   const addressRaw = $('#fullNameSpan').parent().text();
   const vuid = vuidRaw.match(/(\d+)/)[1];
